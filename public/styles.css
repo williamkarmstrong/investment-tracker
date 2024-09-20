@@ -1,0 +1,116 @@
+/* Colours
+    red: #493423
+    orange: #ab875f
+    white: #f5f3f5
+    light orange: #c1a37f
+    dark red: #76220b
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+header {
+    background-color: #493423;
+}
+
+h1 {
+    padding: 15px;
+    color: #f5f3f5;
+    text-align: center;
+}
+
+main {
+    display: flex;
+    background-color: #f5f3f5;
+    padding: 20px;
+    height: 100%;
+}
+
+#left, #right {
+    width: 50%;
+}
+
+table {
+    width: 80%;
+    margin-top: 10px;
+    border-collapse: collapse;
+    border: 1px solid black;
+    text-align: left;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+th {
+    background-color: #ab875f;
+    padding: 5px 7px;
+    border: 1px solid black;
+}
+
+td {
+    background-color: #c1a37f;
+    padding: 5px 7px;
+    border: 1px solid black;
+}
+
+#chart {
+    width: 50%;
+}
+
+#pie-chart {
+    width: 100%;
+}
+
+#right {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 40%;
+    height: fit-content;
+}
+
+form h2 {
+    margin-bottom: 10px;
+}
+
+.asset label, #otherPrice label {
+    font-weight: bold;
+}
+
+fieldset {
+    border: none;
+}
+
+.asset input, #otherPrice input {
+    width: 100%;
+    margin-top: 10px;
+    padding: 7px 10px;
+    border: 1px solid #493423;
+    border-radius: 4px;
+}
+
+.type input {
+    margin-right: 10px;
+}
+
+form button {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #ab875f;
+    color: #f5f3f5;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+footer {
+    padding: 20px;
+    background-color: #f5f3f5;
+    font-weight: bold;
+    text-align: center;
+}

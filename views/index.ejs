@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Armstrong Investment Tracker</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<header>
+    <h1>Armstrong Investment Tracker</h1>
+</header>
+
+<main>
+    <section id="left">
+        <h2>My Portfolio - <%= date %> </h2>
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Symbol</th>
+                <th>Type</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Value</th>
+                <th>Delete</th>
+            </tr>
+            <% let total = 0 %>
+            <% assets.forEach((asset) => { %>
+                <tr>
+                    <td> <%= asset.name %> </td>
+                    <td> <%= asset.symbol %> </td>
+                    <td> <%= asset.assetType %> </td>
+                    <td> <%= asset.amount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) %> </td>
+                    <td> <%= asset.price.toLocaleString(undefined,
+                                {
+                                    style: "currency",
+                                    currency: "USD"
+                                }) %>
+                    </td>
+                    <td> <%= asset.value.toLocaleString(undefined,
+                                {
+                                    style: "currency",
+                                    currency: "USD"
+                                }) %>
+                    </td>
+                    <% total += asset.value %>
+                    <td>
+                        <form action="/delete/<%= asset.symbol %>" method="post">
+                            <button type="submit" id="delete">X</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </table>
+
+        <div id="chart">
+            <canvas id="pie-chart">
+            </canvas>
+        </div>
+        <script>
+            const xValues = <%- JSON.stringify(xValues) %>
+            const yValues = <%- JSON.stringify(yValues) %>
+
+            const ctx = document.getElementById("pie-chart").getContext("2d");
+
+            const chart = new Chart(ctx, {
+                type: "pie",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: ["#b91d47", "#00aba9", "#2b5797", "#e8c3b9",
+                            "#1e7145", "#ED0A3F", "#FFEB00", "#01A638", "#2EB4E6"],
+                        data: yValues
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "My Portfolio Pie Chart"
+                    }
+                }
+            });
+        </script>
+
+        <br><br>
+        <h3>Total: <%= total.toLocaleString(undefined,
+                    {
+                        style: "currency",
+                        currency: "USD"
+                    }) %>
+        </h3>
+    </section>
+
+    <section id="right">
+        <form action="/add" method="post" id="addAsset">
+            <h2>Add a new asset</h2>
+
+            <fieldset class="type">
+                <label for="stock">Stocks</label>
+                <input type="radio" id="stock" name="assetType" value="Stock" required>
+
+                <label for="funds">Funds</label>
+                <input type="radio" id="funds" name="assetType" value="Fund">
+
+                <label for="crypto">Cryptocurrency</label>
+                <input type="radio" id="crypto" name="assetType" value="Cryptocurrency">
+
+                <label for="other">Other</label>
+                <input type="radio" id="other" name="assetType" value="Other">
+                <br><br>
+            </fieldset>
+
+            <fieldset class="asset">
+                <label for="keywords">Enter the ticker/symbol</label><br>
+                <input type="text" id="keywords" name="keywords" placeholder="e.g AAPL" required>
+                <br><br>
+
+                <label for="amount">Number of shares/coins</label><br>
+                <input type="number" step="0.001" id="amount" name="amount" placeholder="e.g 10 shares" required>
+                <br><br>
+            </fieldset>
+
+            <fieldset id="otherPrice" hidden>
+                <label for="price">Enter the price of your asset</label><br>
+                <input type="number" step="0.001" id="price" name="price" placeholder="e.g 14.95">
+            </fieldset>
+            <br><br>
+
+            <button type="submit" value="Add" name="add">Add Asset</button>
+
+        </form>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 William Armstrong - All rights reserved.</p>
+</footer>
+
+<script src="/other.js"></script>
+</body>
+</html>
