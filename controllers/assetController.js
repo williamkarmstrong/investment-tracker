@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const Asset = require('../models/assetModel')
 
 // homepage
@@ -14,7 +13,7 @@ const getHomepage = async (req, res) => {
 
     // update price for each asset
     for await (let asset of assets) {
-        if (asset.assetType == 'Stock' || asset.assetType == 'Fund') {
+        if (asset.assetType === 'Stock' || asset.assetType === 'Fund') {
             try {
                 const priceURL = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${asset.symbol}&apikey=${process.env.ALPHA_KEY}`;
 
@@ -31,7 +30,7 @@ const getHomepage = async (req, res) => {
                 res.status(400).json({error: error.message});
             }
         }
-        else if (asset.assetType == 'Cryptocurrency') {
+        else if (asset.assetType === 'Cryptocurrency') {
             try {
                 const url = `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${asset.symbol}&to_currency=USD&apikey=${process.env.ALPHA_KEY}`;
 
@@ -104,7 +103,7 @@ const addStock = async (req, res) => {
         }
         else {
             // add to db
-            const asset = await Asset.create({ name, symbol, assetType, amount });
+            await Asset.create({ name, symbol, assetType, amount });
         }
     }
     catch (error) {
@@ -131,7 +130,7 @@ const addCrypto = async (req, res) => {
         else {
             try {
                 // add to db
-                const asset = await Asset.create({ symbol, assetType, amount  });
+                await Asset.create({ symbol, assetType, amount  });
             }
             catch (error) {
                 res.status(400).json({error: error.message});
@@ -165,7 +164,7 @@ const addOther = async (req, res) => {
         }
         else {
             try {
-                const asset = Asset.create({name, symbol, assetType, amount, price, value });
+                await Asset.create({name, symbol, assetType, amount, price, value });
             }
             catch (error) {
                 res.status(400).json({error: error.message});

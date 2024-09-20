@@ -10,7 +10,6 @@ const {
     addOther,
     deleteAsset
 } = require("./controllers/assetController");
-const res = require("express/lib/response");
 
 // setup express app
 const app = express();
